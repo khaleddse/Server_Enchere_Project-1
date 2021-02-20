@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const mongoDbConnect = async () => {
-  const uri = "mongodb+srv://mern:mern123@cluster0.hascb.mongodb.net/donation-dev?retryWrites=true&w=majority";
+  const uri = "mongodb+srv://enchere:enchere123@cluster0.r1omr.mongodb.net/test";
   mongoose.set('useFindAndModify', false);
   //mongoose.set('debug', true)
   try {
