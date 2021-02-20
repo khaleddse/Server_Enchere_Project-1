@@ -20,8 +20,7 @@ app.set("view engine", "ejs");
 
 const main = async () => {
   try {
-    // learn Async Await => promises => callback
-    // mongodb => promise  => mongoDbConnect => promise
+    
     const connection = await mongoDbConnect();
     if (connection) {
       console.log("db connecté");
