@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const personneSchema = new Schema(
@@ -21,25 +21,25 @@ const personneSchema = new Schema(
       minlength: 8,
     },
     image: { type: String },
-    
+
     email: {
       type: String,
       required: true,
     },
     password: {
-        type: String,
-        required: true,
-      },
-      grade: {
-        type: String,
-        required: true,
-        trim: true,
-        minlength: 3,
-      },
+      type: String,
+      required: true,
+    },
+    grade: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 3,
+    },
   },
   {
     timestamps: true,
   }
 );
-const Personne = mongoose.model('Personne', personneSchema);
-module.exports = Personne;
+const personne = mongoose.model("Personne", personneSchema);
+module.exports = personne;

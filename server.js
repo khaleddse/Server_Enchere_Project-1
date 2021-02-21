@@ -18,10 +18,12 @@ app.set("view engine", "ejs");
 const AdminRouter = require("./routes/Admin");
 const UserRouter = require("./routes/User");
 const PackSoldeRouter=require("./routes/PackSolde");
+const LoginRouter=require("./routes/Login");
 
 app.use("/admin", AdminRouter);
 app.use("/user", UserRouter);
 app.use("/packsolde",PackSoldeRouter);
+app.use("/auth",LoginRouter);
 
 const main = async () => {
   try {
