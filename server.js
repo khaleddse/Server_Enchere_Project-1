@@ -15,12 +15,16 @@ app.use(bodyParser.json());
 
 // Set EJS as templating engine
 app.set("view engine", "ejs");
+const AdminRouter = require("./routes/Admin");
+const UserRouter = require("./routes/User");
+const PackSoldeRouter=require("./routes/PackSolde");
 
-
+app.use("/admin", AdminRouter);
+app.use("/user", UserRouter);
+app.use("/packsolde",PackSoldeRouter);
 
 const main = async () => {
   try {
-    
     const connection = await mongoDbConnect();
     if (connection) {
       console.log("db connecté");
