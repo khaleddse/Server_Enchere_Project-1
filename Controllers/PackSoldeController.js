@@ -1,5 +1,15 @@
 const Pack=require('../model/PackSolde.model');
 
+
+exports.getAllPack = async (req, res) => {
+    try {
+      const Packs = await Pack.find();
+      res.status(200).json(Packs);
+    } catch (err) {
+      res.status(400).json('Error: ' + err);
+    }
+  };
+
 exports.addPack=async(req,res)=>{
    try{
     const {price,qtepoints}=req.body;
@@ -18,4 +28,41 @@ exports.addPack=async(req,res)=>{
    }
 
 
+}
+exports.deletePack = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const Rst = await Pack.findByIdAndDelete(id);
+      if (!Rst) {
+        res.status(400).json('Error: ' + err);
+      }
+      res.status(200).json('Pack deleted ');
+    } catch (err) {
+      res.status(400).json('Error: ' + err);
+    }
+  };
+  exports.getPackById = async (req, res) => {
+    try {
+        const packs = await Pack.findById(req.params.id)
+        res.json(packs)
+    } catch (err) {
+        res.status(400).json('Error: ' + err);
+    }
+};
+exports.UpdatePack = async (req, res) => {
+     const { id } = req.params;
+    const updatePack =  req.body;
+try{
+    const packs = await Pack.findByIdAndUpdate(
+        id,
+        { $set: updatePack },
+        { new: true }
+      );
+     return res.status(200).json({
+        message: "Pack updated!",
+        New_pack:packs
+      });
+    }catch(err){
+        return res.status(400).json({error:err.message})
+    }
 }
