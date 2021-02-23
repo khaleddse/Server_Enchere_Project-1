@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 
 // Set EJS as templating engine
 app.set("view engine", "ejs");
+ Models/Product_Familly
 const AnnonceRouter=require('./routes/AnnouceRoutes/AnnounceRoute')
 const EnchereRouter= require('./routes/AnnouceRoutes/EncehreRoute')
 const DrawRouter =require('./routes/AnnouceRoutes/DrawRoute')
@@ -25,10 +26,19 @@ app.use('/enchere',EnchereRouter)
 app.use('/draw',DrawRouter)
 app.use('/normalAnnounce',NormalAnnounceRouter)
 
+const AdminRouter = require("./routes/Admin");
+const UserRouter = require("./routes/User");
+const PackSoldeRouter=require("./routes/PackSolde");
+const LoginRouter=require("./routes/Login");
+
+app.use("/admin", AdminRouter);
+app.use("/user", UserRouter);
+app.use("/packsolde",PackSoldeRouter);
+app.use("/auth",LoginRouter);
+
+
 const main = async () => {
   try {
-    // learn Async Await => promises => callback
-    // mongodb => promise  => mongoDbConnect => promise
     const connection = await mongoDbConnect();
     if (connection) {
       console.log("db connecté");
