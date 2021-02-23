@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const avis = new Schema({
-  email: { type: String, require: true },
-  detail: { type: String, require: true },
+  email: { type: String, required: true },
+  detail: { type: String, required: true },
 });
 
 const Avis = mongoose.model("Avis", avis);
