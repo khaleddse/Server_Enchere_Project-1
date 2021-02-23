@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 // Set EJS as templating engine
 app.set("view engine", "ejs");
- Models/Product_Familly
+ 
 const AnnonceRouter=require('./routes/AnnouceRoutes/AnnounceRoute')
 const EnchereRouter= require('./routes/AnnouceRoutes/EncehreRoute')
 const DrawRouter =require('./routes/AnnouceRoutes/DrawRoute')
