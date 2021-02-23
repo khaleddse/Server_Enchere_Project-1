@@ -15,6 +15,17 @@ app.use(bodyParser.json());
 
 // Set EJS as templating engine
 app.set("view engine", "ejs");
+ Models/Product_Familly
+const AnnonceRouter=require('./routes/AnnouceRoutes/AnnounceRoute')
+const EnchereRouter= require('./routes/AnnouceRoutes/EncehreRoute')
+const DrawRouter =require('./routes/AnnouceRoutes/DrawRoute')
+const NormalAnnounceRouter =require('./routes/AnnouceRoutes/NormalAnnounceRoute')
+
+app.use('/announce',AnnonceRouter)
+app.use('/enchere',EnchereRouter)
+app.use('/draw',DrawRouter)
+app.use('/normalAnnounce',NormalAnnounceRouter)
+
 const AdminRouter = require("./routes/Admin");
 const UserRouter = require("./routes/User");
 const PackSoldeRouter=require("./routes/PackSolde");
@@ -24,6 +35,7 @@ app.use("/admin", AdminRouter);
 app.use("/user", UserRouter);
 app.use("/packsolde",PackSoldeRouter);
 app.use("/auth",LoginRouter);
+
 
 const main = async () => {
   try {
