@@ -21,15 +21,28 @@ const EnchereRouter= require('./routes/AnnouceRoutes/EncehreRoute')
 const DrawRouter =require('./routes/AnnouceRoutes/DrawRoute')
 const NormalAnnounceRouter =require('./routes/AnnouceRoutes/NormalAnnounceRoute')
 
-app.use('/announce',AnnonceRouter)
-app.use('/enchere',EnchereRouter)
-app.use('/draw',DrawRouter)
-app.use('/normalAnnounce',NormalAnnounceRouter)
+
+const categsRouter = require("./routes/Categori.route");
+const subcategsRouter = require("./routes/Subcategs.route");
+const avisRouter = require("./routes/Avis.route");
+const cityRouter = require("./routes/City.route");
 
 const AdminRouter = require("./routes/Admin");
 const UserRouter = require("./routes/User");
 const PackSoldeRouter=require("./routes/PackSolde");
 const LoginRouter=require("./routes/Login");
+
+app.use("/categorie", categsRouter);
+app.use("/subcategs", subcategsRouter);
+app.use("/avis", avisRouter);
+app.use("/city", cityRouter);
+
+app.use('/announce',AnnonceRouter)
+app.use('/enchere',EnchereRouter)
+app.use('/draw',DrawRouter)
+app.use('/normalAnnounce',NormalAnnounceRouter)
+
+
 
 app.use("/admin", AdminRouter);
 app.use("/user", UserRouter);
