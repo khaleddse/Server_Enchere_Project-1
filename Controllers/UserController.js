@@ -2,6 +2,15 @@ const User = require("../model/personne/User.model");
 const personnne = require("../model/personne/personne.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const nodemailer=require("nodemailer");
+
+var transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "enchere.tunise1@gmail.com",
+    pass: "encheremlawen",
+  },
+});
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -44,6 +53,21 @@ exports.signup = async (req, res, next) => {
       const addedUser = await user.save();
 
       res.status(200).json({ message: "User created", userId: addedUser._id });
+      transporter.sendMail(
+        {
+          from: "youremail@gmail.com",
+          to: email,
+          subject: "Bienvenue sur Enchere",
+          text: "Bonjour " + firstname + " Bienvenue sur Enchere-Tunise,Votre nouveau compte vous donne accès aux produits, applications et services Enchére Tunise.",
+        },
+        function (error, info) {
+          if (error) {
+            console.log(error.message);
+          } else {
+            console.log("Email sent: " + info.response);
+          }
+        }
+      );
     } else {
       return res.status(400).json({ message: "mot de passe pas hashé" });
     }
