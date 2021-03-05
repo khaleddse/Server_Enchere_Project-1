@@ -31,6 +31,7 @@ const AdminRouter = require("./routes/Admin");
 const UserRouter = require("./routes/User");
 const PackSoldeRouter=require("./routes/PackSolde");
 const LoginRouter=require("./routes/Login");
+const StripeRouter=require("./routes/Stripe");
 
 app.use("/categorie", categsRouter);
 app.use("/subcategs", subcategsRouter);
@@ -48,7 +49,7 @@ app.use("/admin", AdminRouter);
 app.use("/user", UserRouter);
 app.use("/packsolde",PackSoldeRouter);
 app.use("/auth",LoginRouter);
-
+app.use("/stripe",StripeRouter);
 
 const main = async () => {
   try {
