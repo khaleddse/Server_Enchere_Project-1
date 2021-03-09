@@ -37,7 +37,7 @@ exports.addEnchere = async (req, res) => {
     });
     res.status(200).json(saved);
   } catch (err) {
-    res.status(200).json({ Error: err.message });
+    res.status(400).json({ Error: err.message });
   }
 };
 exports.getAll = async (req, res) => {

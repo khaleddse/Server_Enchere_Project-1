@@ -7,8 +7,8 @@ const nodemailer=require("nodemailer");
 var transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "enchere.tunise1@gmail.com",
-    pass: "encheremlawen",
+    user: "tunis.enchere@gmail.com",
+    pass: "encheretekup!",
   },
 });
 
@@ -55,7 +55,7 @@ exports.signup = async (req, res, next) => {
       res.status(200).json({ message: "User created", userId: addedUser._id });
       transporter.sendMail(
         {
-          from: "youremail@gmail.com",
+          from: "enchere tunise",
           to: email,
           subject: "Bienvenue sur Enchere",
           text: "Bonjour " + firstname + " Bienvenue sur Enchere-Tunise,Votre nouveau compte vous donne accès aux produits, applications et services Enchére Tunise.",

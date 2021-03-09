@@ -1,8 +1,13 @@
 const Announce = require("../../model/Announce/Announce.model")
 
+
+const item_inpage=2;
 exports.getAllAnnoucements=async (req,res) =>{
+  const page=+req.query.page;
     try{
-        const announces= await Announce.find();
+        const announces= await Announce.find()
+        .skip((page-1)*item_inpage)
+        .limit(item_inpage)
         res.status(200).json(announces)
     }catch(err){
         res.status(400).json({Error:err.message})

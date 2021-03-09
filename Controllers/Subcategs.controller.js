@@ -30,9 +30,7 @@ exports.getAllSubcategs = async (req, res) => {
 
 exports.RechercheSubcategById = async (req, res) => {
   try {
-    const subcategories = await (
-      await Subcateg.findById(req.params.id)
-    ).populated("annonces");
+    const subcategories = await Subcateg.findById(req.params.id).populate('announces');
     res.status(200).json(subcategories);
   } catch (err) {
     res.status(400).json("Error" + err);
@@ -61,7 +59,7 @@ exports.UpdateSubcategs = async (req, res) => {
       { new: true }
     );
     if (Rst) {
-      res.status(200).json("Subcategorie Updated" + subcategsUpdat);
+      res.status(200).json({message:"Subcategorie Updated" , subcategorie:Rst});
     } else {
       throw new Error("Subcategorie Undefined ");
     }

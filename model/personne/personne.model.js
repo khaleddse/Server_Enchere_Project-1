@@ -28,7 +28,9 @@ const personneSchema = new Schema(
     },
     password: {
       type: String,
+      unique:true,
       required: true,
+     
     },
     grade: {
       type: String,

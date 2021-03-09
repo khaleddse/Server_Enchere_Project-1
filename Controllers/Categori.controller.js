@@ -24,9 +24,13 @@ exports.getAllCategori = async (req, res) => {
 exports.RechercheCategById = async (req, res) => {
   try {
     const categories = await Categ.findById(req.params.id);
+    console.log(categories)
+    if(!categories){
+    return res.status(400).json({message:"categorie with this ID not found"});
+    }
     res.status(200).json(categories);
   } catch (err) {
-    res.status(400).json("Error" + err);
+    res.status(400).json("Error" + err.message);
   }
 };
 exports.deleteCategorie = async (req, res) => {
@@ -51,7 +55,7 @@ exports.UpdateCategorie = async (req, res) => {
       { new: true }
     );
     if (Rst) {
-      res.status(200).json("Categorie Updated" + categsUpdat);
+      res.status(200).json({message:"Categorie Updated"  ,categories:Rst});
     } else {
       throw new Error("Categorie Undefined ");
     }

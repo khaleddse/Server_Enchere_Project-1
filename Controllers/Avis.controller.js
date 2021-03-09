@@ -17,7 +17,7 @@ exports.getAllAvis = async (req, res) => {
     const aviss = await Avis.find();
     res.status(200).json(aviss);
   } catch (err) {
-    res.status(400).json("Eerror" + err);
+    res.status(400).json("Error" + err);
   }
 };
 
