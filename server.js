@@ -44,7 +44,7 @@ app.use('/draw',DrawRouter)
 app.use('/normalAnnounce',NormalAnnounceRouter)
 
 
-
+app.use("/uploads",express.static('uploads'))
 app.use("/admin", AdminRouter);
 app.use("/user", UserRouter);
 app.use("/packsolde",PackSoldeRouter);

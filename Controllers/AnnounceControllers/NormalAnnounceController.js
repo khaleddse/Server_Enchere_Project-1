@@ -5,8 +5,11 @@ const User = require("../../model/personne/User.model");
 
 exports.addAnnounce = async (req, res) => {
   try {
-    const { subject, details, phone, image, price } = req.body;
-    const { city, user, subcategorie } = req.params;
+    console.log('aaa')
+    const { subject, details, phone, price } = req.body;
+    const image=req.file.path
+    const { city,subcategorie,user } = req.params;
+    
     await City.findById(city);
     await User.findById(user);
     await Subcateg.findById(subcategorie);
@@ -30,7 +33,7 @@ exports.addAnnounce = async (req, res) => {
     });
     res.status(200).json(saved);
   } catch (err) {
-    res.status(200).json({ Error: err.message });
+    res.status(400).json({ Error: err.message });
   }
 };
 exports.getAll = async (req, res) => {

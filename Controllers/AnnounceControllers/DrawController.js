@@ -13,15 +13,16 @@ exports.addDraw = async (req, res) => {
       max_participants_number,
       participation_price,
     } = req.body;
-    const { city, user, subcategorie } = req.params;
+    const { city,subcategorie } = req.params;
+    const { userId } = req.personData;
     await City.findById(city);
-    await User.findById(user);
+    await User.findById(userId);
     await Subcateg.findById(subcategorie);
     const draw = new Draw({
       subject,
       details,
       city,
-      user,
+      user:userId,
       phone,
       image,
       subcategorie,

@@ -11,7 +11,7 @@ var Announce = new Schema(
       { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     ],
     phone: { type: String, required: true },
-    image: [{ type: String }],
+    image: { type: String},
     subcategorie: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Subcateg",

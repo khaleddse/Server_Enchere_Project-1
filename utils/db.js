@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const mongoDbConnect = async () => {
-  const uri = "mongodb://localhost:27017/enchéreTn";
+  const uri = "mongodb+srv://Reservation:khaled123@cluster0.4mio9.mongodb.net/enchérTn?retryWrites=true&w=majority";
   mongoose.set('useFindAndModify', false);
   //mongoose.set('debug', true)
   try {
