@@ -9,20 +9,19 @@ exports.addEnchere = async (req, res) => {
       subject,
       details,
       phone,
-      image,
       end_Date,
       initial_price,
     } = req.body;
-    const { userId } = req.personData;
-    const { city,subcategorie } = req.params;
+    const image=req.file.path
+    const { city,subcategorie,user } = req.params;
     await City.findById(city);
-    await User.findById(userId);
+    await User.findById(user);
     await Subcateg.findById(subcategorie);
     const enchere = new Enchere({
       subject,
       details,
       city,
-      user:userId,
+      user,
       phone,
       image,
       subcategorie,
@@ -33,7 +32,7 @@ exports.addEnchere = async (req, res) => {
     await Subcateg.findByIdAndUpdate(subcategorie, {
       $push: { announces: saved._id },
     });
-    await User.findByIdAndUpdate(userId, {
+    await User.findByIdAndUpdate(user, {
       $push: { announces: saved._id },
     });
     res.status(200).json(saved);

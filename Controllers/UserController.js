@@ -27,12 +27,12 @@ exports.signup = async (req, res, next) => {
       firstname,
       lastname,
       phone,
-      image,
       email,
       password,
       point,
       announces,
     } = req.body;
+    const image=req.file.path
     const userDoc = await User.findOne({ email: email });
     if (userDoc) {
       return res.status(404).json({ message: "email déja existe" });
