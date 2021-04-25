@@ -92,19 +92,22 @@ exports.UpDateUser = async (req, res) => {
   const { userId } = req.personData;
   
   try {
-    const updatedUser = req.body;
-    const user = await User.findByIdAndUpdate(
+    let user=await  User.findById(userId)
+    console.log("updatedUser",req.body)
+    const image=req.file?req.file.path : user.image
+     user = await User.findByIdAndUpdate(
       userId,
-      { $set: updatedUser },
+      { $set: req.body,image },
       { new: true }
     );
-    const { _id, firstname, lastname,phone,  image, email } = user;
+    console.log(user)
+    const { _id, firstname, lastname,phone,   email } = user;
     const payload = {
       userId: _id,
       firstname,
       lastname,
       phone,
-      image,
+      image:user.image,
       email,
       grade: "user",
     };
@@ -115,7 +118,7 @@ exports.UpDateUser = async (req, res) => {
       message: "User updated!",
       token: "Bearer " + token,
       UserId: _id,
-    });
+    });   
   } catch (err) {
     res.status(400).json({ Error: err.message });
   }

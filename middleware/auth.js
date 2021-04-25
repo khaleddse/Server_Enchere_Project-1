@@ -7,7 +7,7 @@ exports.isAuth = (req, res, next) => {
     const decode = jwt.verify(token, "enchere2020!");
     if (!decode) {
       return res
-        .status(400)
+        .status(401)
         .json({ message: "vous etes pas autorisé pour cette opération" });
     }
     console.log(decode,"isauth")
@@ -16,7 +16,7 @@ exports.isAuth = (req, res, next) => {
     next();
   } catch (err) {
     res
-      .status(400)
+      .status(401)
       .json({ err: new Error("vous etes pas autorisé pour cette opération") });
   }
 };
