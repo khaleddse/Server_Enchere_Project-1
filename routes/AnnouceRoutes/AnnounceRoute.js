@@ -4,5 +4,6 @@ const AnnonceController=require('../../Controllers/AnnounceControllers/AnnounceC
 router.get('/',AnnonceController.getAllAnnoucements)
 router.delete('/:id',AnnonceController.deleteAnnounce)
 router.get('/:id',AnnonceController.SearchByID)
+router.get('/user/:id',AnnonceController.getuserannounces)
 router.post('/update/:id',AnnonceController.UpDatedAnnounce)
 module.exports=router
