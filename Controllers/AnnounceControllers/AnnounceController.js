@@ -1,7 +1,18 @@
 const Announce = require("../../model/Announce/Announce.model")
-
-
+const personne = require("../../model/personne/personne.model")
 const item_inpage=2;
+exports.getuserannounces=async (req,res) =>{
+    try{
+      const user=await personne.findById(req.params.id).populate({
+        path: 'announces',
+        populate: { path: 'user' }
+      });
+      res.status(200).json(user.announces)
+
+    }catch(err){
+        res.status(400).json({Error:err.message})
+    }
+  }
 exports.getAllAnnoucements=async (req,res) =>{
   const page=+req.query.page;
     try{

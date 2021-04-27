@@ -6,7 +6,7 @@ const user = new Schema({
     type: String,
     default: 0,
   },
-  announces: [],
+  announces: [{ type: mongoose.Schema.Types.ObjectId, ref: "Announce" }],
 });
 
 const User = personne.discriminator("User", user);

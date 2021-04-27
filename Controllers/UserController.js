@@ -94,14 +94,12 @@ exports.UpDateUser = async (req, res) => {
   
   try {
     let user=await  User.findById(userId)
-    console.log("updatedUser",req.body)
     const image=req.file?req.file.path : user.image
      user = await User.findByIdAndUpdate(
       userId,
       { $set: req.body,image },
       { new: true }
     );
-    console.log(user)
     const { _id, firstname, lastname,phone,   email } = user;
     const payload = {
       userId: _id,
