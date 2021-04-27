@@ -12,8 +12,8 @@ exports.addDraw = async (req, res) => {
       max_participants_number,
       participation_price,
     } = req.body;
-    const image=req.file.path
-    const { city,subcategorie,user } = req.params;
+    const image = req.file.path;
+    const { city, subcategorie, user } = req.params;
 
     await City.findById(city);
     await User.findById(user);
@@ -38,6 +38,7 @@ exports.addDraw = async (req, res) => {
     });
     res.status(200).json(saved);
   } catch (err) {
+    console.log(err.message);
     res.status(200).json({ Error: err.message });
   }
 };

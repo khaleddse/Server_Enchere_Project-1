@@ -5,15 +5,9 @@ const User = require("../../model/personne/User.model");
 
 exports.addEnchere = async (req, res) => {
   try {
-    const {
-      subject,
-      details,
-      phone,
-      end_Date,
-      initial_price,
-    } = req.body;
-    const image=req.file.path
-    const { city,subcategorie,user } = req.params;
+    const { subject, details, phone, end_Date, initial_price } = req.body;
+    const image = req.file.path;
+    const { city, subcategorie, user } = req.params;
     await City.findById(city);
     await User.findById(user);
     await Subcateg.findById(subcategorie);

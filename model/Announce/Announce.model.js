@@ -8,7 +8,7 @@ var Announce = new Schema(
     city: { type: mongoose.Schema.Types.ObjectId, ref: "City",  },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", },
     likes: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+      { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     ],
     phone: { type: String, required: true },
     image: { type: String},
