@@ -30,9 +30,10 @@ exports.signup = async (req, res, next) => {
       email,
       password,
       point,
+      image,
       announces,
     } = req.body;
-    const image=req.file.path
+   
     const userDoc = await User.findOne({ email: email });
     if (userDoc) {
       return res.status(404).json({ message: "email déja existe" });
