@@ -40,6 +40,7 @@ exports.signup = async (req, res, next) => {
     }
     const hashedpw = await bcrypt.hash(password, 12);
     if (hashedpw) {
+
       const user = new User({
         firstname: firstname,
         lastname: lastname,
@@ -80,8 +81,8 @@ exports.signup = async (req, res, next) => {
 
 exports.FindUserById = async (req, res) => {
   try {
-    const admin = await User.findById(req.params.id);
-    res.status(200).json(admin);
+    const user = await User.findById(req.params.id);
+    res.status(200).json(user);
   } catch (err) {
     res.status(400).json("Error: " + err);
   }
