@@ -1,6 +1,6 @@
 const Announce = require("../../model/Announce/Announce.model")
 const personne = require("../../model/personne/personne.model")
-const item_inpage=2;
+const item_inpage=3;
 exports.getuserannounces=async (req,res) =>{
     try{
       const user=await personne.findById(req.params.id).populate({
@@ -15,12 +15,19 @@ exports.getuserannounces=async (req,res) =>{
   }
 exports.getAllAnnoucements=async (req,res) =>{
   const page=+req.query.page;
-    try{
-        const announces= await Announce.find()
+
+    try {
+
+        const announcesCount= (await Announce.find()).length
+
+        const announces=await Announce.find()
+        .sort({createdAt:-1}).populate("user")
         .skip((page-1)*item_inpage)
         .limit(item_inpage)
-        res.status(200).json(announces)
-    }catch(err){
+
+        res.status(200).json({announces,announcesCount:Math.ceil(announcesCount/item_inpage) })
+
+    } catch(err){
         res.status(400).json({Error:err.message})
     }
 }
