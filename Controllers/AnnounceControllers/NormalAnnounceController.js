@@ -2,6 +2,7 @@ const NormalAnnounce = require("../../model/Announce/NormalAnnounce.model");
 const City = require("../../model/City.model");
 const Subcateg = require("../../model/Subcategs.model");
 const User = require("../../model/personne/User.model");
+const io = require('../../socket');
 
 exports.addAnnounce = async (req, res) => {
   try {
@@ -30,6 +31,9 @@ exports.addAnnounce = async (req, res) => {
     });
     await User.findByIdAndUpdate(user, {
       $push: { announces: saved._id },
+    });
+    io.getIO().emit('posts', { action: 'create',
+      saved
     });
     res.status(200).json(saved);
   } catch (err) {

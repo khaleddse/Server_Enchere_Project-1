@@ -7,7 +7,7 @@ var bodyParser = require("body-parser");
 require("dotenv").config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port =5000;
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -32,6 +32,7 @@ const UserRouter = require("./routes/User");
 const PackSoldeRouter=require("./routes/PackSolde");
 const LoginRouter=require("./routes/Login");
 const StripeRouter=require("./routes/Stripe");
+const { Socket } = require("socket.io");
 
 app.use("/categorie", categsRouter);
 app.use("/subcategs", subcategsRouter);
@@ -53,12 +54,16 @@ app.use("/stripe",StripeRouter);
 
 const main = async () => {
   try {
+  
     const connection = await mongoDbConnect();
     if (connection) {
       console.log("db connecté");
-      app.listen(port, () => {
-        console.log(`Server is running on port: ${port}`);
-      });
+      const server = app.listen(port);
+      const io = require('./socket').init(server);
+   io.on("connection",socket=>{
+      console.log("Client connected")
+    })
+   
     }
   } catch (err) {
     console.error(err);
@@ -67,3 +72,25 @@ const main = async () => {
 };
 
 main();
+
+
+/*mongoose
+  .connect(
+    "mongodb+srv://Reservation:khaled123@cluster0.4mio9.mongodb.net/enchérTn?retryWrites=true&w=majority",  { useNewUrlParser: true, 
+    useCreateIndex: true, 
+    useUnifiedTopology: true 
+  }
+  )
+  .then(result => {
+    const server = app.listen(port);
+    const io = require('socket.io')(server, {
+      cors: {
+          origin: "http://localhost:3000",
+          methods: ["GET", "POST"]
+      }
+  });
+    io.on('connection', socket => {
+      console.log('Client connected');
+    });
+  })
+  .catch(err => console.log(err));*/
