@@ -1,5 +1,6 @@
 const Announce = require("../../model/Announce/Announce.model")
 const personne = require("../../model/personne/personne.model")
+const io = require('../../socket');
 const item_inpage=3;
 exports.getuserannounces=async (req,res) =>{
     try{
@@ -34,9 +35,13 @@ exports.getAllAnnoucements=async (req,res) =>{
 
 exports.deleteAnnounce =async (req,res)=>{
     try{
-        const rst=await Announce.findByIdAndDelete(req.params.id)
-        if(rst)
-        res.status(200).json("Annouce deleted!")
+      postId=req.params.id
+        const rst=await Announce.findByIdAndDelete(postId)
+        if(rst){
+          io.getIO().emit('posts', { action: 'delete', post: postId });
+          res.status(200).json("Annouce deleted!")
+        }
+        
         else throw new Error('ID not found')
     }catch(err){
         res.status(400).json({Error :err.message})
@@ -61,9 +66,10 @@ exports.SearchByID = async (req, res) => {
         { new: true }
       );
       if (Rst) {
+        io.getIO().emit('posts', { action: 'update', post: Rst });
         await res
           .status(200)
-          .json({ message: "Annonce updated!", updatedAnnonce });
+          .json({ message: "Annonce updated!", Rst });
       } else {
         throw new Error("announceID undefined !");
       }

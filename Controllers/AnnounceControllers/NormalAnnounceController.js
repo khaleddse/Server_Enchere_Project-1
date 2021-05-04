@@ -60,9 +60,10 @@ exports.UpDatedNormalAnnounce = async (req, res) => {
       { new: true }
     );
     if (Rst) {
+      io.getIO().emit('posts', { action: 'update', post: Rst });
       await res
         .status(200)
-        .json({ message: "Anounce updated!", updatedAnnonce });
+        .json({ message: "Anounce updated!", annonce:Rst });
     } else {
       throw new Error("AnounceID undefined !");
     }
