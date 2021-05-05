@@ -2,13 +2,44 @@ const Admin = require("../model/personne/Admin.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const nodemailer = require("nodemailer");
 
+var transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "don.project2020@gmail.com",
+    pass: "Mern@123",
+  },
+});
 exports.getAllAdmins = async (req, res) => {
   try {
     const admins = await Admin.find();
     res.status(200).json(admins);
   } catch (err) {
     res.status(400).json("Error: " + err);
+  }
+};
+exports.RepondeAvis = async (req, res) => {
+  const { email, message } = req.body;
+  try {
+    transporter.sendMail(
+      {
+        from: "youremail@gmail.com",
+        to: email,
+        subject: "Repondre avis ",
+        text: message,
+      },
+      function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      }
+    );
+    return res.status(200).json({ message: "email envoyée avec succes" });
+  } catch (err) {
+    res.status(400).json({ Error: err.message });
   }
 };
 exports.addAdmin = async (req, res) => {
