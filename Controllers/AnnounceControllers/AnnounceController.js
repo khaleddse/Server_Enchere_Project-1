@@ -1,6 +1,6 @@
 const Announce = require("../../model/Announce/Announce.model")
 const personne = require("../../model/personne/personne.model")
-const item_inpage=3;
+const item_inpage=12;
 exports.getuserannounces=async (req,res) =>{
     try{
       const user=await personne.findById(req.params.id).populate({

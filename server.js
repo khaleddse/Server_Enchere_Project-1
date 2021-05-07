@@ -4,7 +4,9 @@ const mongoDbConnect = require("./utils/db.js");
 const cors = require("cors");
 const mongoose = require("mongoose");
 var bodyParser = require("body-parser");
+const cron = require('node-cron');
 require("dotenv").config();
+
 
 const app = express();
 const port =5000;
@@ -51,6 +53,17 @@ app.use("/user", UserRouter);
 app.use("/packsolde",PackSoldeRouter);
 app.use("/auth",LoginRouter);
 app.use("/stripe",StripeRouter);
+
+
+const Enchere=require('./model/Announce/Enchere.model');
+
+
+cron.schedule('* 1 * * *', async (req,res)=> {
+ const encher= await Enchere.find({"end_Date"  : {$gt : Date.now()}}) 
+ console.log(encher)
+return res.send(encher)
+  //console.log('running a task every minute');
+});
 
 const main = async () => {
   try {
