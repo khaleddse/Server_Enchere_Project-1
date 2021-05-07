@@ -3,6 +3,7 @@ const personnne = require("../model/personne/personne.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer=require("nodemailer");
+const Enchere=require("../model/Announce/Enchere.model")
 
 var transporter = nodemailer.createTransport({
   service: "gmail",
@@ -75,7 +76,7 @@ exports.signup = async (req, res, next) => {
     }
   } catch (err) {
     return res.status(400).json({ error: err.message });
-    console.log(err.message);
+    
   }
 };
 
@@ -140,3 +141,27 @@ exports.deleteUser = async (req, res) => {
 };
 
 
+exports.AddEnchere=async(req,res)=>{
+
+  try{
+    const amount=req.body.amount
+    const userId=req.personData
+    const enchereId=req.param.enchereId
+    const user=await User.findById(userId)
+  const announce=await Enchere.findById(enchereId)
+  if (user.point <5){
+ throw new Error("cannot add Enchére with point under 5 point")
+  }
+  user.point=user.point-5;
+  await user.save()
+  announce.enchere_list=announce.enchere_list.unshift(userId)
+  announce.price=announce.price+amount
+  const annonce=await announce.save();
+ 
+  
+  return res.status(200).json({message:"enchere added ",annonce})
+  } catch (err) {
+    res.status(400).json(err.message)
+  }
+  
+  }
