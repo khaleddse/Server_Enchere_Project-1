@@ -58,7 +58,7 @@ app.use("/stripe",StripeRouter);
 const Enchere=require('./model/Announce/Enchere.model');
 
 
-cron.schedule('* 1 * * *', async (req,res)=> {
+cron.schedule('* * 1 * *', async (req,res)=> {
  const encher= await Enchere.find({"end_Date"  : {$gt : Date.now()}}) 
  console.log(encher)
 return res.send(encher)
