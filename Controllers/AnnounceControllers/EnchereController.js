@@ -2,6 +2,7 @@ const Enchere = require("../../model/Announce/Enchere.model");
 const City = require("../../model/City.model");
 const Subcateg = require("../../model/Subcategs.model");
 const User = require("../../model/personne/User.model");
+const jwt = require("jsonwebtoken");
 
 exports.addEnchere = async (req, res) => {
   try {
@@ -38,6 +39,50 @@ exports.getAll = async (req, res) => {
   try {
     const enchers = await Enchere.find();
     res.status(200).json(enchers);
+  } catch (err) {
+    res.status(400).json({ Error: err.message });
+  }
+};
+
+exports.EnchereParticipation = async (req, res) => {
+  const { id } = req.params;
+  try {
+    let user = await User.findById(req.body.user);
+    user = await User.findByIdAndUpdate(req.body.user, {
+      $set: { point: user.point - 10 },
+    });
+    const {
+      _id,
+      firstname,
+      lastname,
+      phone,
+      image,
+      email,
+      grade,
+      point,
+      announces,
+    } = user;
+    const payload = {
+      userId: _id,
+      firstname,
+      lastname,
+      phone,
+      image,
+      email,
+      point,
+      announces,
+      grade,
+    };
+
+    const token = await jwt.sign(payload, "enchere2020!", { expiresIn: 3600 });
+
+    await Enchere.findByIdAndUpdate(id, {
+      $push: { enchere_list: req.body },
+    });
+
+    const enchere = await Enchere.findById(id).populate("user");
+
+    res.status(200).json({enchere, token: "Bearer " + token, UserId: _id});
   } catch (err) {
     res.status(400).json({ Error: err.message });
   }

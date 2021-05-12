@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const personne = require("./personne.model");
 const user = new Schema({
   point: {
-    type: String,
+    type: Number,
     default: 0,
   },
   announces: [{ type: mongoose.Schema.Types.ObjectId, ref: "Announce" }],
