@@ -2,7 +2,7 @@ const Draw = require("../../model/Announce/Draw.model");
 const City = require("../../model/City.model");
 const Subcateg = require("../../model/Subcategs.model");
 const User = require("../../model/personne/User.model");
-
+const io = require('../../socket');
 exports.addDraw = async (req, res) => {
   try {
     const {
@@ -36,6 +36,9 @@ exports.addDraw = async (req, res) => {
     await User.findByIdAndUpdate(user, {
       $push: { announces: saved._id },
     });
+    io.getIO().emit('posts', { action: 'create',
+      saved
+    });
     res.status(200).json(saved);
   } catch (err) {
     console.log(err.message);
@@ -61,6 +64,9 @@ exports.UpDatedDraw = async (req, res) => {
       { new: true }
     );
     if (Rst) {
+      io.getIO().emit('posts', { action: 'update',
+      saved
+    });
       await res.status(200).json({ message: "Draw updated!", updatedAnnonce });
     } else {
       throw new Error("DrawID undefined !");

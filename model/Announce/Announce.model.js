@@ -12,6 +12,7 @@ var Announce = new Schema(
     ],
     phone: { type: String, required: true },
     image: { type: String},
+    isVlable:{type:Boolean,default:true},
     subcategorie: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Subcateg",

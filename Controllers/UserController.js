@@ -154,6 +154,9 @@ exports.AddEnchere=async(req,res)=>{
   }
   user.point=user.point-5;
   await user.save()
+  const existingUserID =announce.enchere_list.findIndex((item) => item.id === userId);
+  const existingCartItem = state.items[existingCartItemIndex];
+  let updatedItems;
   announce.enchere_list=announce.enchere_list.unshift(userId)
   announce.price=announce.price+amount
   const annonce=await announce.save();

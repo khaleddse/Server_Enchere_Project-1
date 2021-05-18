@@ -3,6 +3,7 @@ const City = require("../../model/City.model");
 const Subcateg = require("../../model/Subcategs.model");
 const User = require("../../model/personne/User.model");
 const jwt = require("jsonwebtoken");
+const io = require('../../socket');
 
 exports.addEnchere = async (req, res) => {
   try {
@@ -30,6 +31,9 @@ exports.addEnchere = async (req, res) => {
     await User.findByIdAndUpdate(user, {
       $push: { announces: saved._id },
     });
+    io.getIO().emit('posts', { action: 'create',
+    saved
+  });
     res.status(200).json(saved);
   } catch (err) {
     res.status(400).json({ Error: err.message });
@@ -81,7 +85,9 @@ exports.EnchereParticipation = async (req, res) => {
     });
 
     const enchere = await Enchere.findById(id).populate("user");
-
+    io.getIO().emit('posts/'+id, { action: 'update',
+    enchere
+  });
     res.status(200).json({enchere, token: "Bearer " + token, UserId: _id});
   } catch (err) {
     res.status(400).json({ Error: err.message });
@@ -98,6 +104,8 @@ exports.UpDatedEnchere = async (req, res) => {
       { new: true }
     );
     if (Rst) {
+      io.getIO().emit('posts', { action: 'update'
+    });
       await res
         .status(200)
         .json({ message: "Enchere updated!", updatedAnnonce });
