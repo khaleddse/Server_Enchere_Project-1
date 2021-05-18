@@ -18,12 +18,13 @@ exports.addpayment = async (req, res) => {
     });
     user.point = +user.point + point;
     await user.save();
-    const { _id, firstname, lastname, phone, email } = user;
+    const { _id, firstname, lastname, phone, email} = user;
     const payload = {
       userId: _id,
       firstname,
       lastname,
       phone,
+      point:user.point,
       image: user.image,
       email,
       grade: "user",
