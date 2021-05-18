@@ -102,10 +102,11 @@ exports.UpDateUser = async (req, res) => {
       { $set: req.body,image },
       { new: true }
     );
-    const { _id, firstname, lastname,phone,   email } = user;
+    const { _id, firstname, lastname,phone,   email ,point} = user;
     const payload = {
       userId: _id,
       firstname,
+      point,
       lastname,
       phone,
       image:user.image,
