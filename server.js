@@ -58,7 +58,7 @@ app.use("/stripe",StripeRouter);
 const Enchere=require('./model/Announce/Enchere.model');
 
 
-cron.schedule('* * * * *', async (req,res)=> {
+cron.schedule('*/30 * * * *', async (req,res)=> {
  const encher= await Enchere.updateMany({"end_Date"  : {$gt : Date.now()}}, { $set: { isVlable: true } } ) 
  io.getIO().emit('posts', { action: 'isUpdated'
 });

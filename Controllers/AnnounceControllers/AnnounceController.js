@@ -44,7 +44,7 @@ exports.deleteAnnounce =async (req,res)=>{
 }   
 exports.SearchByID = async (req, res) => {
     try {
-      const announce = await Announce.findById(req.params.id);
+      const announce = await Announce.findById(req.params.id).populate("user");
       res.status(200).json({ announce });
     } catch (err) {
       res.status(400).json(err);
